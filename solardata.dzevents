@@ -133,7 +133,7 @@ return {
 		-- Coefficient of mitigation M
 		local absolutePressure = relativePressure - domoticz.utils.round((altitude/ 8.3),1) -- hPa
 		local sinusSunAltitude = math.sin(math.rad(sunAltitude))
-		local M0 = math.sqrt(1229 + math.pow(614 * sinusSunAltitude,2)) - 614 * sinusSunAltitude
+		local M0 = math.sqrt(1229 + ((614 * sinusSunAltitude)^2)) - 614 * sinusSunAltitude
 		local M = M0 * relativePressure/absolutePressure
 
 		domoticz.log('', domoticz.LOG_INFO)
@@ -159,12 +159,12 @@ return {
 		domoticz.log('Using the newly fetched cloud cover value: '..okta..' with UTC timestamp: '..dsAPIData.currently.time, domoticz.LOG_DEBUG)
 		domoticz.data.lastOkta = okta
 
-		local Kc = 1-0.75*math.pow(okta,3.4)  -- Factor of mitigation for the cloud layer
+		local Kc = 1-0.75*(okta^3.4)  -- Factor of mitigation for the cloud layer
 
 		local directRadiation, scatteredRadiation, totalRadiation, Lux, weightedLux
 		if sunAltitude > 1 then -- Below 1° of Altitude , the formulae reach their limit of precision.
-			directRadiation = RadiationAtm * math.pow(0.6,M) * sinusSunAltitude
-			scatteredRadiation = RadiationAtm * (0.271 - 0.294 * math.pow(0.6,M)) * sinusSunAltitude
+			directRadiation = RadiationAtm * (0.6,^M) * sinusSunAltitude
+			scatteredRadiation = RadiationAtm * (0.271 - 0.294 * (0.6^M)) * sinusSunAltitude
 			totalRadiation = scatteredRadiation + directRadiation
 			Lux = totalRadiation / 0.0079  -- Radiation in Lux. 1 Lux = 0,0079 W/m²
 			weightedLux = Lux * Kc   -- radiation of the Sun with the cloud layer
