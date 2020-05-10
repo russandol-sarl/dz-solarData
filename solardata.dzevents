@@ -163,7 +163,7 @@ return {
 
 		local directRadiation, scatteredRadiation, totalRadiation, Lux, weightedLux
 		if sunAltitude > 1 then -- Below 1° of Altitude , the formulae reach their limit of precision.
-			directRadiation = RadiationAtm * (0.6,^M) * sinusSunAltitude
+			directRadiation = RadiationAtm * (0.6^M) * sinusSunAltitude
 			scatteredRadiation = RadiationAtm * (0.271 - 0.294 * (0.6^M)) * sinusSunAltitude
 			totalRadiation = scatteredRadiation + directRadiation
 			Lux = totalRadiation / 0.0079  -- Radiation in Lux. 1 Lux = 0,0079 W/m²
